@@ -1,17 +1,30 @@
-<p>
-    <a href="{% url 'learning_logs:index' %}">Learning Log</a>
-    |
-    <a href="{% url 'learning_logs:topics' %}">Topics</a>
-    |
-    {% if user.is_authenticated %}
-        Hello, {{ user.username }}.
-        |
-        <a href="{% url 'users:logout' %}">Log out</a>
-    {% else %}
-        <a href="{% url 'users:login' %}">Log in</a>
-        |
-        <a href="{% url 'users:register' %}">Click here to Register</a>, if you don't have an Account
-    {% endif %}
-</p>
+{% load bootstrap3 %}
 
-{% block content %}{% endblock content %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE-edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+        <title>Learning Log</title>
+
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+    </head>
+    <body>
+        {%  include 'learning_logs/_navigation.html' %}
+
+        <div class="container">
+            <div class="page-header">
+                {% block header %}{% endblock header %}
+            </div>
+
+            <div>
+                {% block content %}{% endblock content %}
+            </div>
+
+        </div>
+
+    </body>
+</html>
