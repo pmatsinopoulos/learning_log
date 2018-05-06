@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -16,7 +16,7 @@ def index(request):
 
 @login_required
 def topics(request):
-    topics = Topic.objects.filter(owner=request.user).order_by('date_added')
+    topics = get_list_or_404(Topic.objects.filter(owner=request.user).order_by('date_added'))
     context = {'topics': topics}
     return render(request, 'learning_logs/topics.html', context)
 
@@ -24,7 +24,7 @@ def topics(request):
 @login_required
 def topic(request, topic_id):
     """Show a single topic and all its entries."""
-    topic = Topic.objects.filter(owner=request.user).get(id=topic_id)
+    topic = get_object_or_404(Topic.objects.filter(owner=request.user), id=topic_id)
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
@@ -52,7 +52,7 @@ def new_topic(request):
 
 @login_required
 def new_entry(request, topic_id):
-    topic = Topic.objects.filter(owner=request.user).get(id=topic_id)
+    topic = get_object_or_404(Topic.objects.filter(owner=request.user), id=topic_id)
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
@@ -71,8 +71,8 @@ def new_entry(request, topic_id):
 
 @login_required
 def edit_entry(request, topic_id, entry_id):
-    topic = Topic.objects.filter(owner=request.user).get(id=topic_id)
-    entry = topic.entry_set.get(id=entry_id)
+    topic = get_object_or_404(Topic.objects.filter(owner=request.user), id=topic_id)
+    entry = get_object_or_404(topic.entry_set, id=entry_id)
     if request.method != 'POST':
         form = EntryForm(instance=entry)
     else:
