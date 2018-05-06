@@ -8,7 +8,10 @@ from django.urls import reverse
 
 # Create your views here.
 
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def logout(request):
     django.contrib.auth.views.logout(request)
     return HttpResponseRedirect(reverse('learning_logs:index'))
