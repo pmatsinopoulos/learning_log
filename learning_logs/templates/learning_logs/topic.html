@@ -8,6 +8,7 @@
             <li>
                 <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
                 <p>{{ entry.text|linebreaks }}</p>
+                <a href="{% url 'learning_logs:edit_entry' topic.id entry.id %}">Edit Entry</a>
             </li>
         {% empty %}
             <li>
@@ -15,4 +16,6 @@
             </li>
         {% endfor %}
     </ul>
+
+    <a href="{% url 'learning_logs:new_entry' topic.id %}">Add Entry</a>
 {% endblock content %}
