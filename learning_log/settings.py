@@ -144,7 +144,7 @@ if os.getcwd() == '/app':
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     # Allow all host headers.
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ['panosm-learning-log.herokuapp.com']
 
     # Static asset configuration
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -164,6 +164,8 @@ if os.getcwd() == '/app':
     # Simplified static file serving.
     # https://warehouse.python.org/project/whitenoise/
     MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
+
+    DEBUG = False
 
 # import django_heroku
 # django_heroku.settings(locals())
